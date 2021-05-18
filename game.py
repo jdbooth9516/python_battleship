@@ -9,24 +9,43 @@ class Game:
         self.player_1 = Player()
         self.player_2 = Player()
         self.turn = 1
+        self.run = False
 
     def run_game(self):
+        # ADD INSTRUCTIONS ABOVE HERE
+        self.run = True
         print("Player 1")
         self.player_1.set_name()
         print("Player 2 ")
         self.player_2.set_name()
+        # PLAYER 1 PLACES PIECES
         self.show_board()
         self.place_piece()
+        self.clear_screen()
+        #PLAYER 2 PLACE PIECES
+        self.show_board()
+        self.place_piece()
+        #START MAIN LOOP HERE
 
     def place_piece(self):
-        dirct = self.piece.set_direction()
-        col = self.piece.set_piece_colum()
-        row = self.piece.set_piece_row()
-        self.player_1.own_board.grid[row][col] = ' D '
-        if dirct == 'vertical':
-            for i in range(self.piece.size):
-                self.player_1.own_board.grid[row + i][col] = ' D '
+        if self.turn == 1:
+            dirct = self.piece.set_direction()
+            col = self.piece.set_piece_colum()
+            row = self.piece.set_piece_row()
+            self.player_1.own_board.grid[row][col] = ' D '
+            if dirct == 'vertical':
+                for i in range(self.piece.size):
+                    self.player_1.own_board.grid[row + i][col] = ' D '
+        else:
+            dirct = self.piece.set_direction()
+            col = self.piece.set_piece_colum()
+            row = self.piece.set_piece_row()
+            self.player_2.own_board.grid[row][col] = ' D '
+            if dirct == 'vertical':
+                for i in range(self.piece.size):
+                    self.player_2.own_board.grid[row + i][col] = ' D '
         self.show_board()
+        self.handle_turn()
 
     def show_board(self):
         if self.turn == 1:
@@ -50,3 +69,12 @@ class Game:
             for i in range(length):
                 print(player_2_own[i])
 
+    def handle_turn(self):
+        if self.turn == 1:
+            self.turn = 2
+        else:
+            self.turn = 1
+
+    def clear_screen(self):
+        for i in range(20):
+            print()
