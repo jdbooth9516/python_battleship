@@ -14,34 +14,42 @@ class Ship:
             return self.direction
 
     def set_piece_colum(self):
-        column_cord = int(input('select column cordinate to place your piece: '))
+
+        column_cord = int(input(f'select column cordinate to place your {self.name}: '))
         return column_cord
 
     def set_piece_row(self):
-        row_cord = int(input('select row cordinate to place your piece: '))
+        row_cord = int(input(f'select row cordinate to place your {self.name}: '))
         return row_cord
+
 
 class Destroyer(Ship):
     def __init__(self):
         super().__init__()
-        self.name = 'Destroyer'
+        self.name = ' Destroyer '
+        self.id = ' D '
         self.size = 2
+
 
 class Submarine(Ship):
     def __init__(self):
         super().__init__()
-        self.name = 'Submarine'
+        self.name = ' Submarine '
+        self.id = ' S '
         self.size = 3
+
 
 class Battleship(Ship):
     def __init__(self):
         super().__init__()
-        self.name = 'Battleship'
-        self.size = 3
+        self.name = ' Battleship '
+        self.id = ' B '
+        self.size = 4
+
 
 class Aircraft_carrier(Ship):
     def __init__(self):
         super().__init__()
-        self.name = 'Aircraft_carrier'
+        self.name = ' Aircraft_carrier '
+        self.id = ' A '
         self.size = 5
-        

@@ -5,7 +5,6 @@ from players import Player
 
 class Game:
     def __init__(self):
-        self.piece = Ship()
         self.player_1 = Player()
         self.player_2 = Player()
         self.turn = 1
@@ -37,33 +36,47 @@ class Game:
 
     def place_piece(self):
         if self.turn == 1:
-            dirct = self.piece.set_direction()
-            col = self.piece.set_piece_colum()
-            row = self.piece.set_piece_row()
-            self.player_1.own_board.grid[row][col] = ' D '
+            length = len(self.player_1.pieces)
+            print(f'{self.player_1.name} please place your pieces')
+            for i in range(length):
 
-            if dirct == 'vertical':
-                for i in range(self.piece.size):
-                    self.player_1.own_board.grid[row + i][col] = ' D '
+                dirct = self.player_1.pieces[i].set_direction()
+                col = self.player_1.pieces[i].set_piece_colum()
+                row = self.player_1.pieces[i].set_piece_row()
+                self.player_1.own_board.grid[row][col] = self.player_1.pieces[i].id
 
-            elif dirct == 'horizontal':
-                for i in range(self.piece.size):
-                    self.player_1.own_board.grid[row][col + i] = ' D '
+                if dirct == 'vertical':
+                    for j in range(self.player_1.pieces[i].size):
+                        print(self.player_1.pieces[i].size)
+                        self.player_1.own_board.grid[row + j][col] = self.player_1.pieces[i].id
+                        self.show_board()
+
+                elif dirct == 'horizontal':
+                    for j in range(self.player_1.pieces[i].size):
+                        self.player_1.own_board.grid[row][col + j] = self.player_1.pieces[i].id
+                        self.show_board()
+
         else:
-            dirct = self.piece.set_direction()
-            col = self.piece.set_piece_colum()
-            row = self.piece.set_piece_row()
-            self.player_2.own_board.grid[row][col] = ' D '
+            length = len(self.player_2.pieces)
+            print(f'{self.player_2.name} please place your pieces')
+            for i in range(length):
 
-            if dirct == 'vertical':
-                for i in range(self.piece.size):
-                    self.player_2.own_board.grid[row + i][col] = ' D '
+                dirct = self.player_2.pieces[i].set_direction()
+                col = self.player_2.pieces[i].set_piece_colum()
+                row = self.player_2.pieces[i].set_piece_row()
+                self.player_2.own_board.grid[row][col] = self.player_2.pieces[i].id
 
-            elif dirct == 'horizontal':
-                for i in range(self.piece.size):
-                    self.player_2.own_board.grid[row][col + i] = ' D '
+                if dirct == 'vertical':
+                    for j in range(self.player_2.pieces[i].size):
+                        print(self.player_2.pieces[i].size)
+                        self.player_2.own_board.grid[row + j][col] = self.player_2.pieces[i].id
+                        self.show_board()
 
-        self.show_board()
+                elif dirct == 'horizontal':
+                    for j in range(self.player_2.pieces[i].size):
+                        self.player_2.own_board.grid[row][col + j] = self.player_2.pieces[i].id
+                        self.show_board()
+
         self.handle_turn()
 
     def show_board(self):
