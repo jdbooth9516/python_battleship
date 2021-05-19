@@ -25,7 +25,15 @@ class Game:
         #PLAYER 2 PLACE PIECES
         self.show_board()
         self.place_piece()
+        self.clear_screen()
         #START MAIN LOOP HERE
+        self.main()
+
+    def main(self):
+        while self.run == True:
+            self.show_board()
+            self.attack()
+
 
     def place_piece(self):
         if self.turn == 1:
@@ -33,17 +41,28 @@ class Game:
             col = self.piece.set_piece_colum()
             row = self.piece.set_piece_row()
             self.player_1.own_board.grid[row][col] = ' D '
+
             if dirct == 'vertical':
                 for i in range(self.piece.size):
                     self.player_1.own_board.grid[row + i][col] = ' D '
+
+            elif dirct == 'horizontal':
+                for i in range(self.piece.size):
+                    self.player_1.own_board.grid[row][col + i] = ' D '
         else:
             dirct = self.piece.set_direction()
             col = self.piece.set_piece_colum()
             row = self.piece.set_piece_row()
             self.player_2.own_board.grid[row][col] = ' D '
+
             if dirct == 'vertical':
                 for i in range(self.piece.size):
                     self.player_2.own_board.grid[row + i][col] = ' D '
+
+            elif dirct == 'horizontal':
+                for i in range(self.piece.size):
+                    self.player_2.own_board.grid[row][col + i] = ' D '
+
         self.show_board()
         self.handle_turn()
 
@@ -74,6 +93,34 @@ class Game:
             self.turn = 2
         else:
             self.turn = 1
+
+    def attack(self):
+        col = int(input('Choose a column to attack: '))
+        row = int(input('Choose a row to attack: '))
+
+        if self.turn == 1:
+            if self.player_2.own_board.grid[row][col] == ' # ':
+                print("MISSED")
+                self.player_1.attack_board.grid[row][col] = ' M '
+            elif self.player_2.own_board.grid[row][col] == ' D ':
+                print("HIT")
+                self.player_1.attack_board.grid[row][col] = ' H '
+                self.player_2.own_board.grid[row][col] = ' H '
+            self.handle_turn()
+            self.clear_screen()
+
+        elif self.turn == 2:
+            if self.player_1.own_board.grid[row][col] == ' # ':
+                print("MISSED")
+                self.player_2.attack_board.grid[row][col] = ' M '
+            elif self.player_1.own_board.grid[row][col] == ' D ':
+                print("HIT")
+                self.player_2.attack_board.grid[row][col] = ' H '
+                self.player_1.own_board.grid[row][col] = ' H '
+            self.handle_turn()
+            self.clear_screen()
+            self.run = False
+
 
     def clear_screen(self):
         for i in range(20):
