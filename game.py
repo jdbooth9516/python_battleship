@@ -20,11 +20,11 @@ class Game:
         # PLAYER 1 PLACES PIECES
         self.show_board()
         self.place_piece()
-        self.clear_screen()
+        #self.clear_screen()
         #PLAYER 2 PLACE PIECES
         self.show_board()
         self.place_piece()
-        self.clear_screen()
+        #self.clear_screen()
         #START MAIN LOOP HERE
         self.main()
 
@@ -32,6 +32,8 @@ class Game:
         while self.run == True:
             self.show_board()
             self.attack()
+            self.get_ship_destruction()
+            self.handle_turn()
 
 
     def place_piece(self):
@@ -84,20 +86,20 @@ class Game:
             player_1_attack = self.player_1.attack_board.grid
             player_1_own = self.player_1.own_board.grid
             length = len(player_1_attack)
-            print("ATTACK BOARD")
+            print("Player 1 ATTACK BOARD")
             for i in range(length):
                 print(player_1_attack[i])
-            print("OWN_BOARD")
+            print("Player 1 OWN_BOARD")
             for i in range(length):
                 print(player_1_own[i])
         elif self.turn == 2:
             player_2_attack = self.player_2.attack_board.grid
             player_2_own = self.player_2.own_board.grid
             length = len(player_2_attack)
-            print("ATTACK BOARD")
+            print("Player 2 ATTACK BOARD")
             for i in range(length):
                 print(player_2_attack[i])
-            print("OWN_BOARD")
+            print("Player 2 OWN_BOARD")
             for i in range(length):
                 print(player_2_own[i])
 
@@ -115,24 +117,59 @@ class Game:
             if self.player_2.own_board.grid[row][col] == ' # ':
                 print("MISSED")
                 self.player_1.attack_board.grid[row][col] = ' M '
-            elif self.player_2.own_board.grid[row][col] == ' D ':
+            elif self.player_2.own_board.grid[row][col] != ' # ':
                 print("HIT")
+                if self.player_2.own_board.grid[row][col] == ' D ':
+                    self.player_2.pieces[0].size -= 1
+                    print(self.player_2.pieces[0].size)
+                elif self.player_2.own_board.grid[row][col] == ' S ':
+                    self.player_2.pieces[1].size -= 1
+                elif self.player_2.own_board.grid[row][col] == ' B ':
+                    self.player_2.pieces[2].size -= 1
+                elif self.player_2.own_board.grid[row][col] == ' A ':
+                    self.player_2.pieces[3].size -= 1
                 self.player_1.attack_board.grid[row][col] = ' H '
                 self.player_2.own_board.grid[row][col] = ' H '
-            self.handle_turn()
-            self.clear_screen()
+           # self.clear_screen()
 
         elif self.turn == 2:
             if self.player_1.own_board.grid[row][col] == ' # ':
                 print("MISSED")
                 self.player_2.attack_board.grid[row][col] = ' M '
-            elif self.player_1.own_board.grid[row][col] == ' D ':
+            elif self.player_1.own_board.grid[row][col] != ' # ':
                 print("HIT")
+                if self.player_1.own_board.grid[row][col] == ' D ':
+                    self.player_1.pieces[0].size -= 1
+                    print(self.player_1.pieces[0].size)
+                elif self.player_1.own_board.grid[row][col] == ' S ':
+                    self.player_1.pieces[1].size -= 1
+                elif self.player_1.own_board.grid[row][col] == ' B ':
+                    self.player_1.pieces[2].size -= 1
+                elif self.player_1.own_board.grid[row][col] == ' A ':
+                    self.player_1.pieces[3].size -= 1
                 self.player_2.attack_board.grid[row][col] = ' H '
                 self.player_1.own_board.grid[row][col] = ' H '
-            self.handle_turn()
-            self.clear_screen()
-            self.run = False
+            #self.clear_screen()
+
+
+    def get_ship_destruction(self):
+        if self.turn == 1:
+            length = len(self.player_2.pieces) - 1
+            for i in range(length):
+                if self.player_2.pieces[i].size == 0:
+                    print(f'{self.player_2.pieces[i].name} has been destroyed')
+                    del self.player_2.pieces[i]
+                    print(self.player_2.pieces)
+                    return
+        elif self.turn == 2:
+            length = len(self.player_1.pieces) - 1
+            for i in range(length):
+                if self.player_1.pieces[i].size == 0:
+                    print(f'{self.player_1.pieces[i].name} has been destroyed')
+                    del self.player_1.pieces[i]
+                    print(self.player_1.pieces)
+                    return
+
 
 
     def clear_screen(self):
