@@ -14,6 +14,24 @@ class Game:
         self.winner = None
 
     def run_game(self):
+        print("Welcome to 2 player Battleship")
+        time.sleep(1)
+        print()
+        print("For this game you will need another human player as there is no AI")
+        time.sleep(1)
+        print()
+        print("After your turn you will need to move so that you can not see the screen")
+        time.sleep(1)
+        print()
+        print("When you are asked for an entry to place a ship or attack you will need to enter a number between 1 and 10.")
+        print("The Columns are the numbers on the top of the board and the Rows are the numbers on the side of the board.")
+        time.sleep(1)
+        print()
+
+        print("Other than that follow the on game prompts for the game play")
+        time.sleep(1)
+        print()
+
 
         # ADD INSTRUCTIONS ABOVE HERE
         self.run = True
@@ -51,12 +69,8 @@ class Game:
             length = len(self.player_1.pieces)
             print(f'{self.player_1.name} please place your pieces')
 
-
-
             for i in range(length):
-                # dirct = self.player_1.pieces[i].set_direction()
-                # col = self.player_1.pieces[i].set_piece_colum()
-                # row = self.player_1.pieces[i].set_piece_row()
+
                 while valid_1 == False:
                     direction = self.player_1.pieces[i].set_direction()
                     col = self.player_1.pieces[i].set_piece_colum()
@@ -245,7 +259,6 @@ class Game:
                 self.player_1.own_board.grid[row][col] = ' H '
             self.clear_screen()
 
-
     def get_ship_destruction(self):
         if self.turn == 1:
             length = len(self.player_2.pieces)
@@ -256,7 +269,6 @@ class Game:
                     time.sleep(1)
                     print()
 
-
         elif self.turn == 2:
             length = len(self.player_1.pieces)
 
@@ -265,7 +277,6 @@ class Game:
                     print(f"{self.player_1.name}'s {self.player_1.pieces[i].name} is sunk")
                     time.sleep(1)
                     print()
-
 
     def get_winner(self):
         if self.turn == 1:
@@ -293,7 +304,6 @@ class Game:
             print()
             print(f'{self.player_2.name} Has won the game')
             self.run = False
-
 
     def clear_screen(self):
         for i in range(25):
