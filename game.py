@@ -63,17 +63,22 @@ class Game:
                     row = self.player_1.pieces[i].set_piece_row()
                     size = self.player_1.pieces[i].size
                     space_for_ship = True
-                    for j in range(size):
-                        if direction == 'vertical':
-                            if self.player_1.own_board.grid[row + j][col] != ' # ':
-                                print(" Invaild enter not enough space for the ship")
-                                space_for_ship = False
-                                break
-                        elif direction == 'horizontal':
-                            if self.player_1.own_board.grid[row][col + j] != ' # ':
-                                print(" Invaild enter not enough space for the ship")
-                                space_for_ship = False
-                                break
+
+                    if col <= 0 or col > 10 or row <= 0 or row > 10:
+                        print("Invalid entry: entries must be numbers between 1 and 10. Please try again")
+                        space_for_ship = False
+                    else:
+                        for j in range(size):
+                            if direction == 'vertical':
+                                if self.player_1.own_board.grid[row + j][col] != ' # ':
+                                    print(" Invaild enter not enough space for the ship")
+                                    space_for_ship = False
+                                    break
+                            elif direction == 'horizontal':
+                                if self.player_1.own_board.grid[row][col + j] != ' # ':
+                                    print(" Invaild enter not enough space for the ship")
+                                    space_for_ship = False
+                                    break
 
                     if space_for_ship == True:
                         valid_1 = True
@@ -103,17 +108,23 @@ class Game:
                     row = self.player_2.pieces[i].set_piece_row()
                     size = self.player_2.pieces[i].size
                     space_for_ship = True
-                    for j in range(size):
-                        if direction == 'vertical':
-                            if self.player_2.own_board.grid[row + j][col] != ' # ':
-                                print(" Invaild enter not enough space for the ship")
-                                space_for_ship = False
-                                break
-                        elif direction == 'horizontal':
-                            if self.player_2.own_board.grid[row ][col + j] != ' # ':
-                                print(" Invaild enter not enough space for the ship")
-                                space_for_ship = False
-                                break
+
+                    if col <= 0 or col > 10 or row <= 0 or row > 10:
+                        print("Invalid entry: entries must be numbers between 1 and 10. Please try again")
+                        space_for_ship = False
+
+                    else:
+                        for j in range(size):
+                            if direction == 'vertical':
+                                if self.player_2.own_board.grid[row + j][col] != ' # ':
+                                    print(" Invaild enter not enough space for the ship")
+                                    space_for_ship = False
+                                    break
+                            elif direction == 'horizontal':
+                                if self.player_2.own_board.grid[row ][col + j] != ' # ':
+                                    print(" Invaild enter not enough space for the ship")
+                                    space_for_ship = False
+                                    break
 
 
                     if space_for_ship == True:
@@ -171,8 +182,16 @@ class Game:
         self.clear_screen()
 
     def attack(self):
-        col = int(input('Choose a column to attack: '))
-        row = int(input('Choose a row to attack: '))
+        col = 0
+        row = 0
+        valid = False
+        while valid == False:
+            col = int(input("Choose a column to attack :"))
+            row = int(input("Choose a row to attack :"))
+            if col > 0 and col <= 10 and row > 0 and row <= 10:
+                valid = True
+            else:
+                print("Invalid entry: entries must be numbers between 1 and 10. Please try again")
 
         if self.turn == 1:
 
@@ -212,7 +231,6 @@ class Game:
 
                 if self.player_1.own_board.grid[row][col] == ' D ':
                     self.player_1.pieces[0].size -= 1
-
 
                 elif self.player_1.own_board.grid[row][col] == ' S ':
                     self.player_1.pieces[1].size -= 1
@@ -278,5 +296,5 @@ class Game:
 
 
     def clear_screen(self):
-        for i in range(20):
+        for i in range(25):
             print()
