@@ -9,6 +9,7 @@ class Game:
         self.player_2 = Player()
         self.turn = 1
         self.run = False
+        self.winner = None
 
     def run_game(self):
         # ADD INSTRUCTIONS ABOVE HERE
@@ -33,6 +34,7 @@ class Game:
             self.show_board()
             self.attack()
             self.get_ship_destruction()
+            self.get_winner()
             self.handle_turn()
 
 
@@ -170,7 +172,13 @@ class Game:
                     print(self.player_1.pieces)
                     return
 
-
+    def get_winner(self):
+        if len(self.player_2.pieces) == 0:
+            self.winner = self.player_1.name
+            self.run = False
+        elif len(self.player_1.pieces) == 0:
+            self.winner = self.player_2.name
+            self.run = False
 
     def clear_screen(self):
         for i in range(20):
